@@ -6,8 +6,9 @@
         "private": true,
         "sideEffects": false,
         "scripts": {
-                "raymarch": "cd packages/core && ruby raymarch.rb",
-                "rspec": "cd packages/core && bundle exec rspec test",
+                "gl": "cd packages/core && bundle exec rspec test/gl*",
+                "release": "cd packages/core && rake release",
+                "rspec": "cd packages/core && bundle exec rspec test/*",
                 "rake": "cd packages/core && git add . && rake build",
                 "gem": "cd packages/core && gem install pkg/glrb-0.1.0.gem",
                 "irb": "yarn rake && yarn gem && irb"

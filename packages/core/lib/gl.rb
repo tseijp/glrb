@@ -1,6 +1,6 @@
 module Glrb
         class GL
-                def initialize(w = 256, h = 256, filename = "", shader = gl_defaultSahder(self))
+                def initialize(w = 256, h = 256, filename = "tmp.ppm", shader = gl_defaultSahder(self))
                         @filename = filename
                         @w = w
                         @h = h
@@ -42,7 +42,7 @@ module Glrb
 
         def gl_test (gl)
                 (gl.w.to_i * gl.h.to_i).times.inject("") do |acc, i|
-                        col = gl[i]
+                        col = gl[i].map(->v, i{v.clamp(0, 1)})
                         c = (col[3] * col.xyz.sum / 3 <= 0.5) ? "_ " : "# "
                         ret = acc + c + ((i % gl.w.to_i == gl.w.to_i - 1) ? "\n" : "")
                 end
@@ -52,8 +52,8 @@ module Glrb
                 open(@filename, "wb") do |f|
                         f.puts("P6\n#{gl.w} #{gl.h}\n255")
                         (gl.w.to_i * gl.h.to_i).times do |i|
-                                c = gl[i] * 255
-                                f.write([c.x.to_i % 255, c.y.to_i % 255, c.z.to_i % 255].pack("ccc"))
+                                col = gl[i].map(->v, i{(v.clamp(0, 1) * 255).to_i})
+                                f.write(col.to_a.pack("ccc"))
                         end
                 end
         end

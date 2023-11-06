@@ -15,6 +15,7 @@ module Glrb
                 def [](_) v = to_a; v[_] end
                 def +(_) map(isNum(_) ? ->v, i{v + _} : ->v, i{v + _[i]}) end
                 def -(_) map(isNum(_) ? ->v, i{v - _} : ->v, i{v - _[i]}) end
+                def %(_) map(isNum(_) ? ->v, i{v % _} : ->v, i{v % _[i]}) end
                 def *(_) isNum(_) ? map(->v, i{v * _}) : map(->v, i{v * _[i]}).sum end
                 def /(_) isNum(_) ? map(->v, i{v / _}) : cross(_) end
                 def <=>(_) @v = _ end

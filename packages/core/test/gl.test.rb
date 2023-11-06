@@ -2,22 +2,28 @@ require "glrb"
 include Glrb
 
 RSpec.describe GL do
+        size = 15.0
         before(:each) do
-                @gl = GL.new 15, 15, "test.ppm"
+                @gl = GL.new size, size, "test.ppm"
         end
 
         it "initialize" do
                 expect(@gl).to be_a GL
                 expect(@gl.i).to eq 0
-                expect(@gl.w).to eq 15
-                expect(@gl.h).to eq 15
+                expect(@gl.w).to eq size
+                expect(@gl.h).to eq size
         end
 
-        it "render" do
+        it "basic render" do
                 @gl <=> ->{
-                        c = (@gl.FragCoord / 15.0 - 0.5).length - 0.025
-                        @gl.FragColor = vec c, c, 0.0, 1.0
+                        x = @gl.FragCoord.x / @gl.w
+                        y = @gl.FragCoord.y / @gl.h
+                        c = (vec(x, y) - 0.5).length
+                        @gl.FragColor = vec c, c, c, 1.0
                 }
-                puts @gl.test
+                # @gl.draw
+                # puts @gl.test
         end
+
+
 end
