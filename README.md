@@ -2,8 +2,6 @@
 
 glrb is a simple OpenGL wrapper for Ruby
 
-<img alt="" src="https://i.imgur.com/0fAeVEy.png" width="750px"></img>
-
 ## Installation
 
 ```ruby
