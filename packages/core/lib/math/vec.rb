@@ -10,19 +10,20 @@ module Glrb
                 def size() to_a.size end
                 def map(_) @_[->n{to_a.map.with_index{|v, i| _[v, i]}}] end
                 def sum() to_a.sum end
-                def length() Math::sqrt(self * self) end
+                def length() Math::sqrt(dot(self)) end
                 def !@() self / length end
                 def [](_) v = to_a; v[_] end
                 def +(_) map(isNum(_) ? ->v, i{v + _} : ->v, i{v + _[i]}) end
                 def -(_) map(isNum(_) ? ->v, i{v - _} : ->v, i{v - _[i]}) end
                 def %(_) map(isNum(_) ? ->v, i{v % _} : ->v, i{v % _[i]}) end
-                def *(_) isNum(_) ? map(->v, i{v * _}) : map(->v, i{v * _[i]}).sum end
-                def /(_) isNum(_) ? map(->v, i{v / _}) : cross(_) end
+                def *(_) map(isNum(_) ? ->v, i{v * _} : ->v, i{v * _[i]}) end
+                def /(_) map(isNum(_) ? ->v, i{v / _} : ->v, i{v / _[i]}) end
                 def <=>(_) @v = _ end
                 def >>(_) _ << @n end
                 def <<(n) @_[@v, n] end
                 def +@() map(->v, i{+v}) end
                 def -@() map(->v, i{-v}) end
+                def dot(_) map(->v, i{v * _[i]}).sum end
                 def cross(_) @_[->n{ _vec_cross(to_a, _.to_a) }] end
                 def x() self[0] end
                 def y() self[1] end
@@ -48,4 +49,6 @@ module Glrb
                 a[2] * b[0] - a[0] * b[2],
                 a[0] * b[1] - a[1] * b[0], ]
         end
+        def dot(a, b) a.dot(b) end
+        def cross(a, b) a.cross(b) end
 end

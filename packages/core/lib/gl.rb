@@ -36,8 +36,8 @@ module Glrb
 
         def gl_render (gl, i)
                 gl.i = i
-                gl.FragCoord = vec (i % gl.w).to_f + 0.5, i.to_f / gl.w.to_f + 0.5, 0, 0
-                gl.FragColor = gl.shader.call
+                gl.FragCoord = vec (i % gl.w).to_f + 0.5, gl.h.to_f - i.to_f / gl.w.to_f + 0.5, 0, 0
+                gl.FragColor = gl.shader.call || gl.FragColor
         end
 
         def gl_test (gl)
