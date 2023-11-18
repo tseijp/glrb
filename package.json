@@ -12,6 +12,7 @@
                 "rspec": "cd packages/core && bundle exec rspec test/*",
                 "rake": "cd packages/core && git add . && rake build",
                 "gem": "cd packages/core && gem install pkg/glrb-0.3.0.gem",
+                "pub": "cd packages/core && rale release",
                 "irb": "yarn rake && yarn gem && irb"
         },
         "engines": {
