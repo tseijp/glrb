@@ -52,6 +52,7 @@ module Glrb
                 open(@filename, "wb") do |f|
                         f.puts("P6\n#{gl.w} #{gl.h}\n255")
                         (gl.w.to_i * gl.h.to_i).times do |i|
+                                puts "#{i} / #{gl.w.to_i * gl.h.to_i}"
                                 col = gl[i].map(->v, i{(v.clamp(0, 1) * 255).to_i})
                                 f.write(col.to_a.pack("ccc"))
                         end

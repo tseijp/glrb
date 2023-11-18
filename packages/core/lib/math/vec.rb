@@ -51,4 +51,5 @@ module Glrb
         end
         def dot(a, b) a.dot(b) end
         def cross(a, b) a.cross(b) end
+        def length(a) a.length end
 end

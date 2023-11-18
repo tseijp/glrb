@@ -22,23 +22,13 @@ RSpec.describe GL do
         end
 
         it "noise" do
-                def fract(n)
-                        n - n.floor
-                end
-
-                def mix(x, y, a)
-                        x * (1.0 - a) + y * a
-                end
-
-                def rand(n)
-                        fract(sin(n.dot(vec(12.9898, 4.1414))) * 43758.5453);
-                end
-
+                def fract(n) n - n.floor end
+                def mix(x, y, a) x * (1.0 - a) + y * a  end
+                def rand(n) fract(sin(n.dot(vec(12.9898, 4.1414))) * 43758.5453) end
                 def noise(p)
                         ip = p.map(->v, i{v.floor})
                         u = p.map(->v, i{fract(v)})
                         u = u * u * (u * 2.0 - u)
-
                         res = mix(
                                 mix(rand(ip), rand(ip + vec(1.0, 0.0)), u.x),
                                 mix(rand(ip + vec(0.0, 1.0)), rand(ip + vec(1.0,1.0)), u.x),
