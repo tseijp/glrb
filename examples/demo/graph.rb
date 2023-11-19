@@ -14,15 +14,15 @@ end
 
 gl = GL.new 256.0, 256.0
 
-a = vec 1.0, 1.0, 0.0
-b = vec 0.0, 1.0, 1.0
-c = vec 0.2, 0.4, 0.2
-w = 0.01
-col = vec 0.0, 0.0, 0.0
-
 gl <=> ->{
+        a = vec 1.0, 1.0, 0.0
+        b = vec 0.0, 1.0, 1.0
+        c = vec 0.2, 0.4, 0.2
+        w = 0.01
+        col = vec 0.0, 0.0, 0.0
         st = gl.FragCoord.xy / vec(gl.w, gl.h)
         x = st.x * 10.0
+
         col += a * stroke(st.y, sin(x) * 0.25 + 0.5, w)
         col += b * stroke(st.y, cos(x) * 0.25 + 0.5, w)
         col += c * grid(st.x, w * 0.5, 0.1)
