@@ -1,3 +1,6 @@
+# my created
+*.ppm
+
 # Dependencies
 /node_modules
 
