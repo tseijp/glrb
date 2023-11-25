@@ -12,7 +12,7 @@ def stroke(y, x, w)
         clamp(stp(x, y + w * 0.5) - stp(x, y - w * 0.5), 0.0, 1.0)
 end
 
-gl = GL.new 256.0, 256.0
+gl = GL.new
 
 gl <=> ->{
         a = vec 1.0, 1.0, 0.0
