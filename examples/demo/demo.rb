@@ -15,7 +15,6 @@ end
 
 def sphere(pos)
         length(pos) - 1.5
-
 end
 
 def deathstar(pos)
@@ -102,10 +101,10 @@ def material(pos, nor)
         col
 end
 
-gl = GL.new 128, 128
+gl = GL.new 1280, 800, "demo.ppm"
 
 gl <=> ->{
-        e = vec(0.00001, 0.0, 0.0)
+        e = vec 0.00001, 0.0, 0.0
         x = gl.FragCoord.x - 0.5 * gl.w
         y = gl.FragCoord.y - 0.5 * gl.h
 
@@ -115,7 +114,7 @@ gl <=> ->{
 
         d = map p
 
-        64.times do
+        128.times do
                 if d < e.x
                         n = normal p, d
                         return material p, n
@@ -125,7 +124,11 @@ gl <=> ->{
                 d = map p
         end
 
-        return vec 0.0, 0.0, 0.0, 1.0
+        r = vec(0.7, 0.8, 1.0, 1.0) # Very pale blue
+        b = vec(0.2, 0.2, 0.6, 1.0) # Darker blue
+        y = gl.FragCoord.y / gl.h
+
+        return mix(r, b, y)
 }
 
 gl.draw

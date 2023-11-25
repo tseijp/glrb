@@ -1,5 +1,6 @@
 # my created
 *.ppm
+*.out
 
 # Dependencies
 /node_modules
