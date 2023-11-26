@@ -66,18 +66,18 @@ include Glrb
 
 gl = GL.new 1280, 800
 gl <=> ->{
-        a = vec 1.0, 1.0, 0.0
-        b = vec 0.0, 1.0, 1.0
-        c = vec 0.1, 0.2, 0.1
-        col = vec 0.0, 0.0, 0.0
-        st = gl.FragCoord.xy / vec(gl.w, gl.h)
-        x = st.x * 5.0
-        w = 0.01
-        col += a * stroke st.y, sin(x) * 0.3 + 0.5, w
-        col += b * stroke st.y, cos(x) * 0.2 + 0.5, w
-        col += c * stp grid(st.x, w * 0.5, 0.1) + \
-                       grid(st.y, w * 0.5, 0.1), 0.5 \
-        vec col.x, col.y, col.z, 1.0
+  a = vec 1.0, 1.0, 0.0
+  b = vec 0.0, 1.0, 1.0
+  c = vec 0.1, 0.2, 0.1
+  col = vec 0.0, 0.0, 0.0
+  st = gl.FragCoord.xy / vec(gl.w, gl.h)
+  x = st.x * 5.0
+  w = 0.01
+  col += a * stroke st.y, sin(x) * 0.3 + 0.5, w
+  col += b * stroke st.y, cos(x) * 0.2 + 0.5, w
+  col += c * stp grid(st.x, w * 0.5, 0.1) + \
+                 grid(st.y, w * 0.5, 0.1), 0.5 \
+  vec col.x, col.y, col.z, 1.0
 }
 gl.draw
 ```
@@ -102,11 +102,11 @@ include Glrb
 gl = GL.new 64, 64, "noise.ppm"
 
 gl <=> ->{
-        x = gl.FragCoord.x / gl.w
-        y = gl.FragCoord.y / gl.h
-        pos = vec(x, y, 0.0)
-        col = snoise(pos) * 0.5 + 0.5
-        gl.FragColor = vec col, col, col, 1.0
+  x = gl.FragCoord.x / gl.w
+  y = gl.FragCoord.y / gl.h
+  pos = vec(x, y, 0.0)
+  col = snoise(pos) * 0.5 + 0.5
+  gl.FragColor = vec col, col, col, 1.0
 }
 
 gl.draw
@@ -130,11 +130,11 @@ include Glrb
 gl = GL.new 64, 64, "fbm.ppm"
 
 gl <=> ->{
-        x = gl.FragCoord.x / gl.w
-        y = gl.FragCoord.y / gl.h
-        pos = vec(x, y, 0.0)
-        col = fbm(pos) * 0.5 + 0.5
-        gl.FragColor = vec col, col, col, 1.0
+  x = gl.FragCoord.x / gl.w
+  y = gl.FragCoord.y / gl.h
+  pos = vec(x, y, 0.0)
+  col = fbm(pos) * 0.5 + 0.5
+  gl.FragColor = vec col, col, col, 1.0
 }
 
 gl.draw
