@@ -25,8 +25,6 @@ gl <=> ->{
 
         col += a * stroke(st.y, sin(x) * 0.3 + 0.5, w)
         col += b * stroke(st.y, cos(x) * 0.2 + 0.5, w)
-        # col += c * grid(st.x, w * 0.5, 0.1)
-        # col += c * grid(st.y, w * 0.5, 0.1)
         col += c * stp( \
                 grid(st.x, w * 0.5, 0.1) + \
                 grid(st.y, w * 0.5, 0.1), \

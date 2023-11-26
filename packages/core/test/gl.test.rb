@@ -12,13 +12,9 @@ RSpec.describe GL do
         end
 
         it "basic render" do
-                @gl <=> ->{
-                        x = @gl.FragCoord.x / @gl.w
-                        y = @gl.FragCoord.y / @gl.h
-                        c = (vec(x, y) - 0.5).length
-                        @gl.FragColor = vec c, c, c, 1.0
-                }
-                # @gl.draw
+                st = @gl.FragCoord.xy / vec(@gl.w, @gl.h)
+                @gl.FragColor = vec(st.x, st.y, 0.0, 1.0)
+                @gl.draw
         end
 
         it "noise" do

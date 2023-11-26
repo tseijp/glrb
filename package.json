@@ -6,7 +6,6 @@
         "private": true,
         "sideEffects": false,
         "scripts": {
-                "demo": "cd packages/core && ruby demo.rb --jit",
                 "gl": "cd packages/core && bundle exec rspec test/gl*",
                 "release": "cd packages/core && rake release",
                 "rspec": "cd packages/core && bundle exec rspec test/*",
