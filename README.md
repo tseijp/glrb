@@ -106,7 +106,34 @@ gl <=> ->{
         y = gl.FragCoord.y / gl.h
         pos = vec(x, y, 0.0)
         col = snoise(pos) * 0.5 + 0.5
-        #  col = fbm(pos) * 0.5 + 0.5
+        gl.FragColor = vec col, col, col, 1.0
+}
+
+gl.draw
+```
+
+</td>
+</table>
+
+<table>
+<td width="256px">
+<a href="https://github.com/tseijp/glrb/blob/main/examples/demo/fbm.rb">
+  <img width="256px" alt=" " src="https://raw.githubusercontent.com/tseijp/glrb/main/examples/demo/fbm.png"></img>
+</a>
+</td>
+<td width="414px">
+
+```rb
+require 'glrb'
+include Glrb
+
+gl = GL.new 64, 64, "fbm.ppm"
+
+gl <=> ->{
+        x = gl.FragCoord.x / gl.w
+        y = gl.FragCoord.y / gl.h
+        pos = vec(x, y, 0.0)
+        col = fbm(pos) * 0.5 + 0.5
         gl.FragColor = vec col, col, col, 1.0
 }
 
