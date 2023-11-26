@@ -14,7 +14,7 @@ glrb is a simple OpenGL wrapper for Ruby
 
 </p>
 <p align="center" valign="top">
-  <a href="https://github.com/tseijp/glrb">
+  <a href="https://github.com/tseijp/glrb/blob/main/examples/demo/demo.rb">
     <img alt="🌁" src="https://raw.githubusercontent.com/tseijp/glrb/main/examples/demo/demo.png"></img>
   </a>
 </p>
@@ -33,7 +33,7 @@ gem install glrb
   <img alt=" " src="https://raw.githubusercontent.com/tseijp/glrb/main/examples/demo/basic.png"></img>
 </a>
 </td>
-<td>
+<td width="414px">
 
 ```ruby
 require 'glrb'
@@ -58,7 +58,7 @@ gl.draw
   <img alt=" " src="https://raw.githubusercontent.com/tseijp/glrb/main/examples/demo/graph.png"></img>
 </a>
 </td>
-<td>
+<td width="414px">
 
 ```rb
 require 'glrb'
@@ -90,10 +90,10 @@ gl.draw
 <table>
 <td width="256px">
 <a href="https://github.com/tseijp/glrb/blob/main/examples/demo/noise.rb">
-  <img alt=" " src="https://raw.githubusercontent.com/tseijp/glrb/main/examples/demo/noise.png"></img>
+  <img width="256px" alt=" " src="https://raw.githubusercontent.com/tseijp/glrb/main/examples/demo/noise.png"></img>
 </a>
 </td>
-<td>
+<td width="414px">
 
 ```rb
 require 'glrb'
