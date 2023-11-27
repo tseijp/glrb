@@ -5,7 +5,7 @@
 
 <p align="center">
 
-[![ npm version ](https://img.shields.io/gem/v/glrb?style=flat&colorA=000&colorB=000)](https://rubygems.org/gems/glrb)
+[![ gem version ](https://img.shields.io/gem/v/glrb?style=flat&colorA=000&colorB=000)](https://rubygems.org/gems/glrb)
 [![ downloads ](https://img.shields.io/gem/dt/glrb.svg?style=flat&colorA=000&colorB=000)](https://rubygems.org/gems/glrb)
 [![ license MIT ](https://img.shields.io/github/license/tseijp/glrb?style=flat&colorA=000&colorB=000)](https://github.com/tseijp/glre)
 [![ docs available ](https://img.shields.io/badge/docs-available-000.svg?style=flat&colorA=000)](https://tsei.jp)
