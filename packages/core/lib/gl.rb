@@ -1,4 +1,11 @@
+require_relative "./math/vec.rb"
+require_relative "./math/mat.rb"
+require_relative "./math/sym.rb"
+
 module Glrb
+
+include Glrb::Math
+
 class GL
         def initialize(w = 256, h = 256, filename = "tmp.ppm", shader = gl_defaultSahder(self))
                 @filename = filename
