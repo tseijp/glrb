@@ -1,5 +1,5 @@
 require "glrb"
-include Glrb
+include Glrb::Math
 
 RSpec.describe Vec do
         before(:each) do

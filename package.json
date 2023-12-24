@@ -6,6 +6,7 @@
         "private": true,
         "sideEffects": false,
         "scripts": {
+                "t": "cd packages/core && bundle exec rspec test/glsl/sym*",
                 "gl": "cd packages/core && bundle exec rspec test/gl*",
                 "release": "cd packages/core && rake release",
                 "rspec": "cd packages/core && bundle exec rspec test/*",
