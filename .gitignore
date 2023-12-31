@@ -1,6 +1,8 @@
 # my created
 *.ppm
 *.out
+yarn.lock
+package-lock.json
 
 # Dependencies
 /node_modules

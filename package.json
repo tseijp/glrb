@@ -6,6 +6,10 @@
         "private": true,
         "sideEffects": false,
         "scripts": {
+                "build": "cd examples/docs && yarn build",
+                "start": "cd examples/docs && yarn start",
+                "dev": "cd examples/docs && yarn start",
+                "serve": "cd examples/docs && yarn serve",
                 "t": "cd packages/core && bundle exec rspec test/math/sym*",
                 "gl": "cd packages/core && bundle exec rspec test/gl*",
                 "release": "cd packages/core && rake release",
