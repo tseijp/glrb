@@ -12,6 +12,7 @@
                 "dev": "cd examples/docs && yarn start",
                 "serve": "cd examples/docs && yarn serve",
                 "core": "--------------------------------------------------",
+                "t": "cd packages/core && bundle exec rspec test/ruby/vec.test.rb",
                 "glsl": "cd packages/core && bundle exec rspec test/glsl.test.rb",
                 "ruby": "cd packages/core && bundle exec rspec test/ruby.test.rb",
                 "test:glsl": "cd packages/core && bundle exec rspec test/glsl*",

@@ -1,6 +1,7 @@
 require "glrb"
 
 include Glrb::Ruby
+include Glrb::Utils
 
 RSpec.describe Vec do
         before(:each) do

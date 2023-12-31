@@ -10,14 +10,20 @@ def isStr (target) target.instance_of?(String) end
 
 def sym(init) Sym.new(init) end
 
+def _sym(init, args = 0.0) Sym.new(init, args) end
+
+def _mat(init, args = 0.0) Mat.new(init, args) end
+
 def mat(*init) Mat.new(init) end
 
-def transpose(m)
-a = m.to_a
-Mat.new(a.size.times.map{|i| a[i].size.times.map{|j| a[j][i]}})
-end
+def _vec(init, args = 0.0) Vec.new(init, args) end
 
 def vec(*init) Vec.new(init) end
+
+def transpose(m)
+        a = m.to_a
+        _mat(a.size.times.map{ |i| a[i].size.times.map{|j| a[j][i]} })
+end
 
 def _vec_cross(a, b)
         [ a[1] * b[2] - a[2] * b[1],
