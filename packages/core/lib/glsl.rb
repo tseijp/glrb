@@ -15,7 +15,7 @@ class GL
                 @w = @wh.x
                 @h = @wh.y
                 @shader = shader
-                @FragCoord = Vec.new "gl_FragCoord" # @TODO SUPPPORT vec "xxx"
+                @FragCoord = Vec.new "gl_FragCoord"
                 @FragColor = Vec.new "gl_FragColor"
         end
         def w() @w end

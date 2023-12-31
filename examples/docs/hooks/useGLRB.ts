@@ -74,6 +74,6 @@ export const createGLRB = (frag: string) => {
 
 export const useGLRB = (frag?: string) => {
         const glrb = useOnce(() => createGLRB(frag))
-        React.useSyncExternalStore(glrb.sub, glrb.get)
+        React.useSyncExternalStore(glrb.sub, glrb.get, () => null)
         return glrb
 }
