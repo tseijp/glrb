@@ -8,9 +8,9 @@ module Ruby
 include Glrb::Utils
 
 class Sym < Glrb::Core::Sym
-        def to_f() isNum(@v) ? @v: @v[] end
-        def to_i() self.to_f.to_i end
-        def to_s() self.to_f.to_s end
+        def to_f() !self end
+        def to_i() to_f.to_i end
+        def to_s() to_f.to_s end
         def ==(_) self.to_f == _.to_f end
         def +(_) _sym(->n{ self.to_f + _.to_f }) end
         def -(_) _sym(->n{ self.to_f - _.to_f }) end

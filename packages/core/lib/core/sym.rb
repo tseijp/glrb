@@ -11,6 +11,7 @@ class Sym
                 @v = init
                 @n = args
         end
+        def !@() isPrc(@v) ? @v[@n] : @v end
         def <=>(_) @v = _ end
         def >>(_) _ << @n end
         def <<(n) @_[@v, n] end

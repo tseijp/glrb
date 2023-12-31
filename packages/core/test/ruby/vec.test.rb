@@ -5,9 +5,9 @@ include Glrb::Utils
 
 RSpec.describe Vec do
         before(:each) do
-                @x = Vec.new
-                @a = Vec.new [1.0, 2.0, 2.0]
-                @b = Vec.new [2.0, 0.0, 0.0]
+                @x = vec
+                @a = vec 1.0, 2.0, 2.0
+                @b = Vec.new([2.0, 0.0, 0.0])
                 @c = 2
         end
 
@@ -18,9 +18,9 @@ RSpec.describe Vec do
 
         it "utility methods" do
                 aa = @a.map(->v, i{v + 1})
-                bb = !@b
+                bb = length(@b)
                 expect(aa.to_a).to eq [2.0, 3.0, 3.0]
-                expect(bb.to_a).to eq [1.0, 0.0, 0.0]
+                expect(bb.to_f).to eq 2.0
                 expect(@a.to_a).to eq [1.0, 2.0, 2.0]
                 expect(@a.to_s).to eq "[1.0, 2.0, 2.0]"
                 expect(@a.size).to eq 3

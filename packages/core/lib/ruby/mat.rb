@@ -8,7 +8,7 @@ module Ruby
 include Glrb::Utils
 
 class Mat < Glrb::Core::Mat
-        def to_a() (isArr(@v) ? @v : @v[@n]) end
+        def to_a() (!self).to_a end
         def to_s() to_a.map(&:to_a).to_s end
         def size() to_a.size end
         def map(_) _mat(->n{ to_a.map.with_index{|v, i| _[v, i]} }) end

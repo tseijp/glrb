@@ -1,10 +1,12 @@
 require_relative "./ruby/vec.rb"
 require_relative "./ruby/mat.rb"
 require_relative "./ruby/sym.rb"
+require_relative './utils/helpers'
 
 module Glrb
 
 include Glrb::Ruby
+include Glrb::Utils
 
 class GL
         def initialize(w = 256, h = 256, filename = "tmp.ppm", shader = gl_defaultSahder(self))

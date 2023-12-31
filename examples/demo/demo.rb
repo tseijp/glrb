@@ -68,11 +68,11 @@ end
 
 def normal(pos, d)
         e = vec(0.005, 0.0, 0.0)
-        !vec(
+        length(vec(
                 map(pos + e.xyz) - d,
                 map(pos + e.zxy) - d,
                 map(pos + e.yzx) - d
-        )
+        ))
 end
 
 def palette_impl(t, a, b, c, d)
@@ -109,7 +109,7 @@ gl <=> ->{
         y = gl.FragCoord.y - 0.5 * gl.h
 
         eye = vec 0.0, 0.0, 1.75
-        dir = !(vec x, y, -min(gl.w, gl.h) * 0.5)
+        dir = length(vec x, y, -min(gl.w, gl.h) * 0.5)
         p = eye + dir
 
         d = map p

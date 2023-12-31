@@ -3,10 +3,18 @@ module Glrb
 module Utils
 
 def isNum (target) target.is_a? Numeric end
+
 def isArr (target) target.instance_of?(Array) end
-def isVec (target) target.instance_of?(Vec) end
-def isMat (target) target.instance_of?(Mat) end
+
 def isStr (target) target.instance_of?(String) end
+
+def isPrc (target) target.instance_of?(Proc) end
+
+def isSym (target) target.instance_of?(Sym) end
+
+def isVec (target) target.instance_of?(Vec) end
+
+def isMat (target) target.instance_of?(Mat) end
 
 def sym(init) Sym.new(init) end
 
