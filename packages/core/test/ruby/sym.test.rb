@@ -1,5 +1,6 @@
 require "glrb"
-include Glrb::Math
+
+include Glrb::Ruby
 
 RSpec.describe Sym do
         before(:each) do

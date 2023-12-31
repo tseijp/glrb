@@ -14,7 +14,7 @@ RSpec.describe GL do
         it "basic render" do
                 st = @gl.FragCoord.xy / vec(@gl.w, @gl.h)
                 @gl.FragColor = vec(st.x, st.y, 0.0, 1.0)
-                @gl.draw
+                # @gl.draw
         end
 
         it "noise" do

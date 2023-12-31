@@ -1,5 +1,6 @@
 require "glrb"
-include Glrb::Math
+
+include Glrb::Ruby
 
 RSpec.describe Mat do
         before(:each) do

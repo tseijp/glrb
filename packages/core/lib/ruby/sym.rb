@@ -1,7 +1,8 @@
 require_relative '../utils/helpers' # Require the helpers module
 
 module Glrb
-module Math
+
+module Ruby
 
 include Glrb::Utils
 
@@ -27,6 +28,6 @@ class Sym
         def -@() @_[->{+self.to_f}] end
 end
 
-def sym(init) Sym.new(init) end
-end # Math
+end # Ruby
+
 end # Glrb

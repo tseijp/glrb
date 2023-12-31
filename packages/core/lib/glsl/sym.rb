@@ -1,6 +1,7 @@
 require_relative '../utils/helpers' # Require the helpers module
 
 module Glrb
+
 module Glsl
 
 include Glrb::Utils
@@ -26,5 +27,7 @@ class Sym
 end
 
 def sym(init) Sym.new(init) end
+
 end # Glsl
+
 end # Glrb
