@@ -40,6 +40,7 @@ export default function Home(): JSX.Element {
                                                         outline: 'none',
                                                         width: '256px',
                                                         height: '256px',
+                                                        color: 'black',
                                                 }}
                                                 defaultValue={FRAG}
                                                 ref={form.ref}
