@@ -41,7 +41,7 @@ const config: Config = {
         themeConfig: {
                 image: 'img/docusaurus-social-card.jpg',
                 navbar: {
-                        title: 'My Site',
+                        title: 'glrb',
                         logo: {
                                 alt: ' ',
                                 src: 'img/logo.png',

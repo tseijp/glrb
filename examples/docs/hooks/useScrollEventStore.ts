@@ -116,6 +116,7 @@ type ScrollCallback = (self: typeof scroll) => void
 export const useScrollEventStore = (callback?: ScrollCallback) => {
         React.useSyncExternalStore(
                 () => scroll.subscribe(callback),
+                () => scroll,
                 () => scroll
         )
         return scroll

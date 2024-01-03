@@ -128,6 +128,7 @@ type WheelCallback = (self: typeof wheel) => void
 export const useWheelEventStore = (callback?: WheelCallback) => {
         React.useSyncExternalStore(
                 () => wheel.subscribe(callback),
+                () => wheel,
                 () => wheel
         )
         return wheel

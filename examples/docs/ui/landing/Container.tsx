@@ -16,7 +16,7 @@ export const LandingContainer = (props: LandingContainerProps) => {
                         tl.to(ref.current, { y: -y, duration: 0 })
                 }
                 if (isGestureEnd) {
-                        tl.to(ref.current, { y: -y, duration: 0.5 })
+                        tl.to(ref.current, { y: -y })
                 }
         })
 

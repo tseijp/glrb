@@ -222,6 +222,7 @@ type DragCallback = (self: typeof drag) => void
 export const useDragEventStore = (callback?: DragCallback) => {
         React.useSyncExternalStore(
                 () => drag.subscribe(callback),
+                () => drag,
                 () => drag
         )
         return drag
