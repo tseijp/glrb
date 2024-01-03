@@ -67,7 +67,7 @@ export const createGLRB = (frag: string) => {
                 sub,
                 get,
                 get err() {
-                        return err
+                        return err as any
                 },
         }
 }

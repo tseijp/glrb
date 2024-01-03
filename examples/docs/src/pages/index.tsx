@@ -1,15 +1,17 @@
 import * as React from 'react'
-import Layout from '@theme/Layout'
 import CodeBlock from '@theme/CodeBlock'
 import { Head } from '@site/ui/Head'
 import { Error } from '@site/ui/Error'
 import { Main } from '@site/ui/Main'
-import { H1 } from '@site/ui/H1'
-import { H3 } from '@site/ui/H3'
-import { Wrap } from '@site/ui/Wrap'
+import { H1 } from '@site/ui/cases/H1'
+import { H3 } from '@site/ui/cases/H3'
+import { LandingContainer } from '@site/ui/landing/Container'
+import { CasesContainer } from '@site/ui/cases/Container'
 import { useGLRB } from '@site/hooks/useGLRB'
 import { useForm } from '@site/hooks/useForm'
 import { useDelay } from '@site/hooks/useDelay'
+import { Debug } from '@site/ui/landing/Debug'
+import Layout from '@theme/Layout'
 
 const FRAG = `
 st = gl.FragCoord.xy / vec(gl.w, gl.h)
@@ -25,24 +27,17 @@ export default function Home(): JSX.Element {
                 <Layout noFooter>
                         <Head />
                         <Main>
-                                <H1>RLRB</H1>
-                                <H3>
-                                        🌁glrb is a simple OpenGL wrapper for
-                                        Ruby
-                                </H3>
-                                <H3>Installation</H3>
-                                <CodeBlock language="ruby">
-                                        {'    '}gem i glrb{'    '}
-                                </CodeBlock>
-                                <H3>Example</H3>
-                                <Error>{glrb.err}</Error>
-                                <Wrap>
+                                {/* <Debug /> */}
+                                <LandingContainer>
+                                        <H1>GLRB OpenGL wrapper for Ruby</H1>
+                                </LandingContainer>
+                                <CasesContainer>
                                         <textarea
                                                 defaultValue={FRAG}
                                                 ref={form.ref}
                                         />
                                         <canvas ref={glrb.ref} />
-                                </Wrap>
+                                </CasesContainer>
                         </Main>
                 </Layout>
         )
