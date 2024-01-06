@@ -7,6 +7,7 @@ import { WrapLanding } from '@site/ui/landing/WrapLanding'
 import { WrapCases } from '@site/ui/cases/WrapCases'
 import Layout from '@theme/Layout'
 import { Demo } from '@site/ui/cases/Demo'
+import './style.css'
 
 const FRAG = `
 x = gl.FragCoord.x / gl.w

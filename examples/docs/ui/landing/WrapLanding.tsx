@@ -16,7 +16,7 @@ export const WrapLanding = (props: LandingContainerProps) => {
         const { onClick } = useGestureEventStore((state) => {
                 const el = ref.current
                 const { isGestureing, isGestureEnd, dy, y } = state
-                const c = mix(12, 247, dy)
+                const c = mix(12, 242, dy)
                 const background = `rgba(${c}, ${c}, ${c})`
                 if (isGestureing) tl.to(el, { y, background, duration: 0 })
                 if (isGestureEnd) tl.to(el, { y, background })

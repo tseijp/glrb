@@ -20,7 +20,7 @@ export const Main = (props: MainProps) => {
                                 justifyContent: 'center',
                                 flexDirection: 'column',
                                 overflow: 'visible',
-                                background: 'rgba(247, 247, 247)',
+                                background: 'rgba(242, 242, 242)',
                         }}
                 >
                         {children}

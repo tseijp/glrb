@@ -1,0 +1,19 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+/* dark mode*/
+[data-theme='dark'] .navbar {
+        background-color: rgba(12, 12, 12, 1);
+}
+[data-theme='dark'] .navbar-sidebar {
+        background-color: rgba(12, 12, 12, 1);
+}
+
+/* light mode */
+[data-theme='light'] .navbar {
+        background-color: rgba(242, 242, 242, 1);
+}
+[data-theme='light'] .navbar-sidebar {
+        background-color: rgba(242, 242, 242, 1);
+}
