@@ -91,7 +91,6 @@ export const createGesture = () => {
                         sy = Math.abs(dy) > DELTA_THRESHOLD ? Math.sign(dy) : 0
                         if (sy === 0)
                                 sy = vy > SWIPE_THRESHOLD ? Math.sign(dy) : 0
-                        console.log(vy)
                         if (isScrollEnd) onGestureEnd()
                         if (isScrolling) onGestureing()
                         onGesture()
