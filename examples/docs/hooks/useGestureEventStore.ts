@@ -43,8 +43,6 @@ export const createGesture = () => {
         let vy = 0 // velocity vy      ... 0 ~ 1
         let sy = 0 // sign y           ... -1, 0 or 1
         let iy = 0 // current y        ... 0 or 1
-        let isClicking = false // true if clicked
-        let isDisabled = false // true if y < -h or 0 < y
 
         // reset scroll position if not scrolling
         const resetScrollPosition = (top = 0) => {
@@ -125,9 +123,6 @@ export const createGesture = () => {
                                 return clamp(ret, 0, 1)
                         }
                         return iy
-                },
-                get isDisabled() {
-                        return isDisabled
                 },
                 get isGestureStart() {
                         return scroll.isScrollStart
