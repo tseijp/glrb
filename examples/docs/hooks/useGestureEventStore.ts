@@ -121,7 +121,7 @@ export const createGesture = () => {
                         if (self.isGestureing) {
                                 let ret = dy / DELTA_THRESHOLD
                                 ret = Math.pow(ret, 3) // odd !!
-                                if (ret < 0) ret = 1 + ret!!!
+                                if (ret < 0) ret = 1 + ret
                                 return clamp(ret, 0, 1)
                         }
                         return iy
