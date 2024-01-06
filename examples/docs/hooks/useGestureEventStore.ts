@@ -1,7 +1,17 @@
 import * as React from 'react'
 import { scrollEvent } from '@site/hooks/useScrollEventStore'
 
-const THRESHOLD = 0.25 // swipe threshold
+/**
+ * 0.02276 represents a balance between the two distributions.
+ * - [0.005, 0.005, 0.0075, 0.005, 0.0075, 0.0625, 0.00375, 0.005, 0.00375, 0.00375]
+ *   - Mean: 0.01088
+ *   - Std: 0.01726
+ * - [0.035, 0.035, 0.02175, 0.0325, 0.06375, 0.0425, 0.02225, 0.02, 0.0425, 0.03125]
+ *   - Mean: 0.03465
+ *   - Std: 0.01233
+ */
+const DELTA_THRESHOLD = 0.45 // threshold for movement
+const SWIPE_THRESHOLD = 0.02276 // threshold for velocity based on a normal distribution
 
 const clamp = (x: number, min: number, max: number) => {
         if (x < min) return min
@@ -29,22 +39,21 @@ export const createGesture = () => {
          * scroll
          */
         let y = 0 // y to move target  ... -y 0
-        let dy = 0 // movement y ... -h ~ h
-        let sy = 0 // sign y     ... -1, 0 or 1
-        let iy = 0 // current y  ... 0 or 1
+        let dy = 0 // movement y       ... -1 ~ 1
+        let vy = 0 // velocity vy      ... 0 ~ 1
+        let sy = 0 // sign y           ... -1, 0 or 1
+        let iy = 0 // current y        ... 0 or 1
         let isClicking = false // true if clicked
         let isDisabled = false // true if y < -h or 0 < y
 
         // reset scroll position if not scrolling
         const resetScrollPosition = (top = 0) => {
-                if (!self.isGestureEnd) return
+                if (!self.isGestureEnd) return // since events are stacked in duplicate.
                 window.scrollTo({ top, behavior: 'instant' })
+                isClicking = false
         }
 
         const onGesture = () => {
-                self.isGestureStart = scroll.isScrollStart
-                self.isGestureing = scroll.isScrolling
-                self.isGestureEnd = scroll.isScrollEnd || isClicking
                 listeners.forEach((f) => f(self))
         }
 
@@ -67,7 +76,6 @@ export const createGesture = () => {
                 sy = 1
                 onGestureEnd()
                 onGesture()
-                isClicking = false
         }
 
         scroll.subscribe((state) => {
@@ -75,16 +83,25 @@ export const createGesture = () => {
                         isScrolling,
                         isScrollEnd,
                         value: [, _y],
+                        delta: [, _vy],
                         movement,
                 } = state
                 const h = window.innerHeight
-                if (_y < 0 || h < _y) return
-                dy = movement[1] / h
-                sy = Math.abs(dy) > THRESHOLD ? Math.sign(dy) : 0
-                if (isScrollEnd) onGestureEnd()
-                if (isScrolling) onGestureing()
-                onGesture()
-                dy = 0 // reset values
+                if (0.01 < _y && _y < h - 0.01) {
+                        dy = movement[1] / h
+                        vy = Math.max(vy, Math.abs(_vy / h))
+                        sy = Math.abs(dy) > DELTA_THRESHOLD ? Math.sign(dy) : 0
+                        if (sy === 0)
+                                sy = vy > SWIPE_THRESHOLD ? Math.sign(dy) : 0
+                        console.log(vy)
+                        if (isScrollEnd) onGestureEnd()
+                        if (isScrolling) onGestureing()
+                        onGesture()
+                }
+
+                // reset values
+                dy = 0
+                if (isScrollEnd) vy = 0
         })
 
         const self = {
@@ -94,23 +111,32 @@ export const createGesture = () => {
                 onGesture,
                 onGestureing,
                 onGestureEnd,
-                isGestureStart: false,
-                isGestureing: false,
-                isGestureEnd: false,
                 get y() {
                         return y
                 },
+                get vy() {
+                        return vy
+                },
                 get dy() {
                         if (self.isGestureing) {
-                                let ret = dy / THRESHOLD
+                                let ret = dy / DELTA_THRESHOLD
                                 ret = Math.pow(ret, 3) // odd !!
-                                if (ret < 0) ret = 1 + ret
+                                if (ret < 0) ret = 1 + ret!!!
                                 return clamp(ret, 0, 1)
                         }
                         return iy
                 },
                 get isDisabled() {
                         return isDisabled
+                },
+                get isGestureStart() {
+                        return scroll.isScrollStart
+                },
+                get isGestureing() {
+                        return scroll.isScrolling
+                },
+                get isGestureEnd() {
+                        return scroll.isScrollEnd || isClicking
                 },
         }
 
