@@ -34,7 +34,7 @@ export const wheelEvent = () => {
                 vec2(0, 0, self.movement)
         }
 
-        const onWheel = (_self: any) => {
+        const onWheel = (_e: Event) => {
                 self.isWheelStart = self.active && !self._active
                 self.isWheeling = self.active && self._active
                 self.isWheelEnd = !self.active && self._active
@@ -42,36 +42,38 @@ export const wheelEvent = () => {
         }
 
         const onWheelStart = (e: WheelEvent) => {
-                self.event = e
                 self.active = true
                 wheelValues(e, self.delta)
-                self.onWheel(self)
+                self.onWheel(e)
         }
 
         const onWheeling = (e: Event) => {
+                self.event = e
+                self.target = e.target
+                self._active = self.active
+
                 // register onWheelEnd
                 const id = setTimeout(() => self.onWheelEnd(e), self.timeout)
                 self.clearTimeout()
                 self.clearTimeout = () => clearTimeout(id)
-                self.event = e
+
                 if (!self.active) {
                         self.onWheelStart(e as WheelEvent)
                         return
                 }
 
-                self._active = self.active
                 cpV(self.value, self._value)
                 wheelValues(e, self.delta)
                 addV(self.offset, self.delta, self.offset)
                 addV(self.movement, self.delta, self.movement)
-                self.onWheel(self)
+                self.onWheel(e)
         }
 
         const onWheelEnd = (e: Event) => {
                 self.event = e
                 self.active = false
+                self.onWheel(e)
                 initValues()
-                self.onWheel(self)
         }
 
         const onMount = (target: Element) => {

@@ -11,18 +11,25 @@ export const CasesContainer = (props: WrapProps) => {
         const tl = React.useMemo(() => gsap.timeline(), [])
         const ref = React.useRef<HTMLDivElement | null>(null)
 
-        useGestureEventStore(({ isGestureing, isGestureEnd, y }) => {
-                if (isGestureing) {
-                        tl.to(ref.current, { y: -y, duration: 0 })
-                }
-                if (isGestureEnd) {
-                        tl.to(ref.current, { y: -y })
-                }
+        const { onClick } = useGestureEventStore((state) => {
+                const el = ref.current
+                const {
+                        disable,
+                        isGestureStart,
+                        isGestureing,
+                        isGestureEnd,
+                        y,
+                } = state
+                if (disable) return
+                if (isGestureStart) tl.to(el, { y, duration: 0.01 })
+                if (isGestureing) tl.to(el, { y, duration: 0 })
+                if (isGestureEnd) tl.to(el, { y })
         })
 
         return (
                 <div
                         ref={ref}
+                        onClick={onClick}
                         style={{
                                 position: 'fixed',
                                 top: '100vh',
@@ -31,7 +38,7 @@ export const CasesContainer = (props: WrapProps) => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                background: '#F7F7F7',
+                                background: '#rgba(255, 255, 255, 0.97)',
                         }}
                 >
                         {children}

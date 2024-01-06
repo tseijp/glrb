@@ -19,6 +19,7 @@ export const Main = (props: MainProps) => {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 flexDirection: 'column',
+                                background: '#rgba(255, 255, 255, 0.97)',
                         }}
                 >
                         {children}

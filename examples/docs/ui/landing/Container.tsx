@@ -6,23 +6,34 @@ export interface LandingContainerProps {
         children: React.ReactNode
 }
 
+const mix = (x = 0, y = 0, a = 0.5) => x * (1 - a) + y * a
+
 export const LandingContainer = (props: LandingContainerProps) => {
         const { children } = props
         const tl = React.useMemo(() => gsap.timeline(), [])
         const ref = React.useRef<HTMLDivElement | null>(null)
 
-        useGestureEventStore(({ isGestureing, isGestureEnd, y }) => {
-                if (isGestureing) {
-                        tl.to(ref.current, { y: -y, duration: 0 })
-                }
-                if (isGestureEnd) {
-                        tl.to(ref.current, { y: -y })
-                }
+        const { onClick } = useGestureEventStore((state) => {
+                const el = ref.current
+                const {
+                        disable,
+                        isGestureStart,
+                        isGestureing,
+                        isGestureEnd,
+                        dy,
+                        y,
+                } = state
+                if (disable) return
+                const background = `rgba(0, 0, 0, ${mix(0.03, 0.97, dy)})`
+                if (isGestureStart) tl.to(el, { y, background, duration: 0.01 })
+                if (isGestureing) tl.to(el, { y, background, duration: 0 })
+                if (isGestureEnd) tl.to(el, { y, background })
         })
 
         return (
                 <div
                         ref={ref}
+                        onClick={onClick}
                         style={{
                                 position: 'fixed',
                                 top: 0,
@@ -31,9 +42,8 @@ export const LandingContainer = (props: LandingContainerProps) => {
                                 height: '100vh',
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center',
                                 boxSizing: 'border-box',
-                                background: '#0C0C0C',
+                                background: 'rgba(255, 255, 255, 0.03)',
                         }}
                 >
                         {children}

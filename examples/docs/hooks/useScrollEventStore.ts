@@ -14,6 +14,7 @@ export const scrollEvent = () => {
                 listeners.add(callback)
                 return () => listeners.delete(callback)
         }
+
         const initValues = () => {
                 vec2(0, 0, self.value)
                 vec2(0, 0, self._value)
@@ -21,7 +22,7 @@ export const scrollEvent = () => {
                 vec2(0, 0, self.movement)
         }
 
-        const onScroll = (self: any) => {
+        const onScroll = (_e: Event) => {
                 self.isScrollStart = self.active && !self._active
                 self.isScrolling = self.active && self._active
                 self.isScrollEnd = !self.active && self._active
@@ -29,23 +30,21 @@ export const scrollEvent = () => {
         }
 
         const onScrollStart = (e: Event) => {
-                self.event = e
-                self.target = e.target
                 self.active = true
                 scrollValues(e, self.value)
-                self.onScroll(self)
+                self.onScroll(e)
         }
 
         const onScrolling = (e: Event) => {
-                // register onWheelEnd
+                self.event = e
+                self.target = e.target
+                self._active = self.active
+
                 if (!self.active) {
                         self.onScrollStart(e)
                         return
                 }
 
-                self.event = e
-                self.target = e.target
-                self._active = self.active
                 cpV(self.value, self._value)
                 scrollValues(e, self.value)
 
@@ -54,15 +53,17 @@ export const scrollEvent = () => {
                         addV(self.offset, self.delta, self.offset)
                         addV(self.movement, self.delta, self.movement)
                 }
-                self.onScroll(self)
+
+                self.onScroll(e)
         }
 
         const onScrollEnd = (e: Event) => {
                 self.event = e
                 self.target = e.target
+                self._active = self.active
                 self.active = false
+                self.onScroll(e)
                 initValues()
-                self.onScroll(self)
         }
 
         const onMount = (target: Element) => {
@@ -72,7 +73,10 @@ export const scrollEvent = () => {
         }
 
         const onClean = () => {
+                const target = self.target
+                if (!target) return
                 window.removeEventListener('scroll', self.onScrolling)
+                window.removeEventListener('scrollend', self.onScrollEnd)
         }
 
         const ref = (el: Element | null) => {

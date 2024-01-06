@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { dragEvent } from '@site/hooks/useDragEventStore'
 import { scrollEvent } from '@site/hooks/useScrollEventStore'
 
 const THRESHOLD = 0.25 // swipe threshold
@@ -12,90 +11,87 @@ export const createGesture = () => {
                 return () => void listeners.delete(callback)
         }
 
-        const drag = dragEvent()
         const scroll = scrollEvent()
 
         const ref = (el: Element) => {
-                // drag.ref(el)
-                window.scrollTo(0, 0)
                 if (el) scroll.onMount(document as unknown as Element)
                 else scroll.onClean()
         }
 
         /**
-         * drag and scroll
+         * scroll
          */
-        let y = 0 // movement y  ... 0 ~ h
+        let y = 0 // y to move target  ... -y 0
         let dy = 0 // movement y ... -h ~ h
         let sy = 0 // sign y     ... -1, 0 or 1
         let iy = 0 // current y  ... 0 or 1
+        let disable = false // true if scroll by window.scrollTo
+        let isClicking = false // true if clicked
 
-        const onGesture = (self: any) => {
-                self.isGestureStart = drag.isDragStart || scroll.isScrollStart
-                self.isGestureing = drag.isDragging || scroll.isScrolling
-                self.isGestureEnd = drag.isDragEnd || scroll.isScrollEnd
+        // reset scroll position if not scrolling
+        const resetScrollPosition = () => {
+                if (!self.isGestureEnd) return
+                const h = window.innerHeight
+                disable = true
+                window.scrollTo({ top: iy * h, behavior: 'instant' })
+                disable = false
+        }
+
+        const onGesture = () => {
+                self.isGestureStart = scroll.isScrollStart
+                self.isGestureing = scroll.isScrolling
+                self.isGestureEnd = scroll.isScrollEnd || isClicking
                 listeners.forEach((f) => f(self))
         }
 
-        const onGestureStart = () => {
-                y = 0
-                dy = 0
-                sy = 0
-                iy = 0
-        }
-
         const onGestureing = () => {
-                y = iy * window.innerHeight + dy
-                if (y < 0) y = 0
-                if (y > window.innerHeight) y = window.innerHeight
+                y = -window.innerHeight * (iy + dy)
+                if (y > 0) y = 0
+                if (y < -window.innerHeight) y = -window.innerHeight
         }
 
         const onGestureEnd = () => {
-                const h = window.innerHeight
-                sy = Math.abs(dy) > Math.abs(h) * THRESHOLD ? Math.sign(dy) : 0
+                sy = Math.abs(dy) > THRESHOLD ? Math.sign(dy) : 0
+                iy += sy
+                // y = -iy * window.innerHeight
+                if (iy < 0) iy = 0
+                if (iy > 1) iy = 1
+                setTimeout(resetScrollPosition, 100)
+        }
+
+        const onClick = () => {
+                sy = 1
                 iy += sy
                 if (iy < 0) iy = 0
                 if (iy > 1) iy = 1
-                window.scrollTo(0, iy * h)
+
+                isClicking = true
+                onGesture()
+                setTimeout(resetScrollPosition, 100)
+                isClicking = false
         }
 
-        drag.subscribe((state) => {
-                // if (scroll.active) return
-                // const { isDragStart, isDragging, isDragEnd, movement } = state
-                // if (isDragging) {
-                //         // dy = movement[1]
-                //         // onGestureing()
-                // }
-                // if (isDragEnd) {
-                //         // const h = window.innerHeight / 2
-                //         // onGestureEnd()
-                // }
-                // onGesture(self)
-        })
-
         scroll.subscribe((state) => {
-                if (drag.active) return
-                const { isScrollStart, isScrolling, isScrollEnd, movement } =
-                        state
-                if (isScrollStart) {
-                        onGestureStart()
-                }
-
+                const { isScrolling, isScrollEnd, movement } = state
+                const h = window.innerHeight
                 if (isScrolling) {
-                        sy = 0
-                        dy = movement[1]
+                        dy = movement[1] / h
                         onGestureing()
                 }
                 if (isScrollEnd) {
                         onGestureEnd()
-                        y = iy * window.innerHeight
+                        y = -iy * window.innerHeight
                 }
-                onGesture(self)
+                onGesture()
         })
 
         const self = {
                 subscribe,
                 ref,
+                onClick,
+                onGesture,
+                onGestureing,
+                onGestureEnd,
                 isGestureStart: false,
                 isGestureing: false,
                 isGestureEnd: false,
@@ -103,13 +99,15 @@ export const createGesture = () => {
                         return y
                 },
                 get dy() {
-                        return dy
+                        if (self.isGestureing) {
+                                let ret = dy / THRESHOLD
+                                if (ret < 0) ret = 1 + dy
+                                return 1 - ret
+                        }
+                        return 1 - iy
                 },
-                get sy() {
-                        return sy
-                },
-                get iy() {
-                        return iy
+                get disable() {
+                        return disable
                 },
         }
 
