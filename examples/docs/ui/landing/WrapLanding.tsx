@@ -8,24 +8,16 @@ export interface LandingContainerProps {
 
 const mix = (x = 0, y = 0, a = 0.5) => x * (1 - a) + y * a
 
-export const LandingContainer = (props: LandingContainerProps) => {
+export const WrapLanding = (props: LandingContainerProps) => {
         const { children } = props
         const tl = React.useMemo(() => gsap.timeline(), [])
         const ref = React.useRef<HTMLDivElement | null>(null)
 
         const { onClick } = useGestureEventStore((state) => {
                 const el = ref.current
-                const {
-                        disable,
-                        isGestureStart,
-                        isGestureing,
-                        isGestureEnd,
-                        dy,
-                        y,
-                } = state
-                if (disable) return
-                const background = `rgba(0, 0, 0, ${mix(0.03, 0.97, dy)})`
-                if (isGestureStart) tl.to(el, { y, background, duration: 0.01 })
+                const { isGestureing, isGestureEnd, dy, y } = state
+                const c = mix(12, 247, dy)
+                const background = `rgba(${c}, ${c}, ${c})`
                 if (isGestureing) tl.to(el, { y, background, duration: 0 })
                 if (isGestureEnd) tl.to(el, { y, background })
         })
@@ -43,7 +35,7 @@ export const LandingContainer = (props: LandingContainerProps) => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 boxSizing: 'border-box',
-                                background: 'rgba(255, 255, 255, 0.03)',
+                                background: 'rgba(12, 12, 12)',
                         }}
                 >
                         {children}

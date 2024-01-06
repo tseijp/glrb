@@ -3,6 +3,12 @@ import { scrollEvent } from '@site/hooks/useScrollEventStore'
 
 const THRESHOLD = 0.25 // swipe threshold
 
+const clamp = (x: number, min: number, max: number) => {
+        if (x < min) return min
+        if (x > max) return max
+        return x
+}
+
 export const createGesture = () => {
         const listeners = new Set<any>()
         const subscribe = (callback: any) => {
@@ -14,6 +20,7 @@ export const createGesture = () => {
         const scroll = scrollEvent()
 
         const ref = (el: Element) => {
+                resetScrollPosition(0)
                 if (el) scroll.onMount(document as unknown as Element)
                 else scroll.onClean()
         }
@@ -25,16 +32,13 @@ export const createGesture = () => {
         let dy = 0 // movement y ... -h ~ h
         let sy = 0 // sign y     ... -1, 0 or 1
         let iy = 0 // current y  ... 0 or 1
-        let disable = false // true if scroll by window.scrollTo
         let isClicking = false // true if clicked
+        let isDisabled = false // true if y < -h or 0 < y
 
         // reset scroll position if not scrolling
-        const resetScrollPosition = () => {
+        const resetScrollPosition = (top = 0) => {
                 if (!self.isGestureEnd) return
-                const h = window.innerHeight
-                disable = true
-                window.scrollTo({ top: iy * h, behavior: 'instant' })
-                disable = false
+                window.scrollTo({ top, behavior: 'instant' })
         }
 
         const onGesture = () => {
@@ -45,44 +49,42 @@ export const createGesture = () => {
         }
 
         const onGestureing = () => {
-                y = -window.innerHeight * (iy + dy)
-                if (y > 0) y = 0
-                if (y < -window.innerHeight) y = -window.innerHeight
+                const h = window.innerHeight
+                y = -h * (iy + dy)
+                y = clamp(y, -h, 0)
         }
 
         const onGestureEnd = () => {
-                sy = Math.abs(dy) > THRESHOLD ? Math.sign(dy) : 0
+                const h = window.innerHeight
                 iy += sy
-                // y = -iy * window.innerHeight
-                if (iy < 0) iy = 0
-                if (iy > 1) iy = 1
-                setTimeout(resetScrollPosition, 100)
+                iy = clamp(iy, 0, 1)
+                y = -iy * h
+                setTimeout(() => resetScrollPosition(-y), 100)
         }
 
         const onClick = () => {
-                sy = 1
-                iy += sy
-                if (iy < 0) iy = 0
-                if (iy > 1) iy = 1
-
                 isClicking = true
+                sy = 1
+                onGestureEnd()
                 onGesture()
-                setTimeout(resetScrollPosition, 100)
                 isClicking = false
         }
 
         scroll.subscribe((state) => {
-                const { isScrolling, isScrollEnd, movement } = state
+                const {
+                        isScrolling,
+                        isScrollEnd,
+                        value: [, _y],
+                        movement,
+                } = state
                 const h = window.innerHeight
-                if (isScrolling) {
-                        dy = movement[1] / h
-                        onGestureing()
-                }
-                if (isScrollEnd) {
-                        onGestureEnd()
-                        y = -iy * window.innerHeight
-                }
+                if (_y < 0 || h < _y) return
+                dy = movement[1] / h
+                sy = Math.abs(dy) > THRESHOLD ? Math.sign(dy) : 0
+                if (isScrollEnd) onGestureEnd()
+                if (isScrolling) onGestureing()
                 onGesture()
+                dy = 0 // reset values
         })
 
         const self = {
@@ -101,13 +103,14 @@ export const createGesture = () => {
                 get dy() {
                         if (self.isGestureing) {
                                 let ret = dy / THRESHOLD
-                                if (ret < 0) ret = 1 + dy
-                                return 1 - ret
+                                ret = Math.pow(ret, 3) // odd !!
+                                if (ret < 0) ret = 1 + ret
+                                return clamp(ret, 0, 1)
                         }
-                        return 1 - iy
+                        return iy
                 },
-                get disable() {
-                        return disable
+                get isDisabled() {
+                        return isDisabled
                 },
         }
 

@@ -3,12 +3,10 @@ import { Head } from '@site/ui/Head'
 import { Main } from '@site/ui/Main'
 import { H1 } from '@site/ui/landing/H1'
 import { H3 } from '@site/ui/landing/H3'
-import { LandingContainer } from '@site/ui/landing/Container'
-import { CasesContainer } from '@site/ui/cases/Container'
-import { useGLRB } from '@site/hooks/useGLRB'
-import { useForm } from '@site/hooks/useForm'
-import { useDelay } from '@site/hooks/useDelay'
+import { WrapLanding } from '@site/ui/landing/WrapLanding'
+import { WrapCases } from '@site/ui/cases/WrapCases'
 import Layout from '@theme/Layout'
+import { Demo } from '@site/ui/cases/Demo'
 
 const FRAG = `
 x = gl.FragCoord.x / gl.w
@@ -18,34 +16,18 @@ gl.FragColor = col
 `.trim()
 
 export default function Home(): JSX.Element {
-        const delay = useDelay((e) => glrb.set(e.target.value))
-        const form = useForm(delay)
-        const glrb = useGLRB()
-
         return (
                 <Layout noFooter>
                         <Head />
                         <Main>
-                                <LandingContainer>
+                                <WrapLanding>
                                         <H1>GLRB</H1>
                                         <H3>GLSL via Ruby</H3>
-                                </LandingContainer>
-                                <CasesContainer>
-                                        <canvas ref={glrb.ref} />
-                                        <textarea
-                                                style={{
-                                                        marginLeft: '64px',
-                                                        background: 'none',
-                                                        resize: 'none',
-                                                        border: 'none',
-                                                        outline: 'none',
-                                                        width: '256px',
-                                                        height: '256px',
-                                                }}
-                                                defaultValue={FRAG}
-                                                ref={form.ref}
-                                        />
-                                </CasesContainer>
+                                </WrapLanding>
+                                <WrapCases>
+                                        <Demo frag={FRAG} />
+                                        {/* <Demo frag={FRAG} /> */}
+                                </WrapCases>
                         </Main>
                 </Layout>
         )

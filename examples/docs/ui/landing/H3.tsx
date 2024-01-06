@@ -10,7 +10,7 @@ export const H3 = ({ children }: { children: string }) => {
                                 boxSizing: 'border-box',
                                 margin: `0 0 0 calc(3 * ${letterSpacing})`,
                                 // text decoration
-                                color: 'white',
+                                color: 'rgba(247, 247, 247)',
                                 lineHeight: '2',
                                 letterSpacing,
                                 fontSize,

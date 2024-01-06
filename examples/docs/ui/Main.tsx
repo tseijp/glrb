@@ -7,22 +7,23 @@ export interface MainProps {
 
 export const Main = (props: MainProps) => {
         const { ref } = useGestureEventStore()
-
         const { children } = props
 
         return (
-                <div
+                <main
                         ref={ref}
                         style={{
-                                minHeight: '200vh',
+                                height: '200vh',
                                 display: 'flex',
+                                boxSizing: 'border-box',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 flexDirection: 'column',
-                                background: '#rgba(255, 255, 255, 0.97)',
+                                overflow: 'visible',
+                                background: 'rgba(247, 247, 247)',
                         }}
                 >
                         {children}
-                </div>
+                </main>
         )
 }

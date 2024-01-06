@@ -6,22 +6,14 @@ export interface WrapProps {
         children: React.ReactNode
 }
 
-export const CasesContainer = (props: WrapProps) => {
+export const WrapCases = (props: WrapProps) => {
         const { children } = props
         const tl = React.useMemo(() => gsap.timeline(), [])
         const ref = React.useRef<HTMLDivElement | null>(null)
 
         const { onClick } = useGestureEventStore((state) => {
                 const el = ref.current
-                const {
-                        disable,
-                        isGestureStart,
-                        isGestureing,
-                        isGestureEnd,
-                        y,
-                } = state
-                if (disable) return
-                if (isGestureStart) tl.to(el, { y, duration: 0.01 })
+                const { isGestureing, isGestureEnd, y } = state
                 if (isGestureing) tl.to(el, { y, duration: 0 })
                 if (isGestureEnd) tl.to(el, { y })
         })
@@ -35,13 +27,11 @@ export const CasesContainer = (props: WrapProps) => {
                                 top: '100vh',
                                 width: '100vw',
                                 minHeight: '100vh',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                background: '#rgba(255, 255, 255, 0.97)',
                         }}
                 >
-                        {children}
+                        <div style={{ height: '100%', position: 'relative' }}>
+                                {children}
+                        </div>
                 </div>
         )
 }
