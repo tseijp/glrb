@@ -110,12 +110,17 @@ export const createGesture = () => {
                         return
 
                 const {
+                        isScrollStart,
                         isScrolling,
                         isScrollEnd,
                         value: [, _y],
                         delta: [, _vy],
                         movement,
                 } = state
+
+                self.isGestureStart = isScrollStart
+                self.isGestureing = isScrolling && !isClicking
+                self.isGestureEnd = isScrollEnd || isClicking
                 const h = window.innerHeight
                 if (!checkIgnorePos(_y)) {
                         dy = movement[1] / h
@@ -137,6 +142,9 @@ export const createGesture = () => {
                 hash: '', // for hot reloading
                 subscribe,
                 ref,
+                isGestureStart: false,
+                isGestureing: false,
+                isGestureEnd: false,
                 onClick,
                 onGesture,
                 onGestureing,
@@ -155,15 +163,6 @@ export const createGesture = () => {
                                 return clamp(ret, 0, 1)
                         }
                         return iy
-                },
-                get isGestureStart() {
-                        return scroll.isScrollStart
-                },
-                get isGestureing() {
-                        return scroll.isScrolling && !isClicking
-                },
-                get isGestureEnd() {
-                        return scroll.isScrollEnd || isClicking
                 },
         }
 
