@@ -36,7 +36,7 @@ export const Demo = (props: DemoProps) => {
                                 <div
                                         style={{
                                                 width: isMobile
-                                                        ? '100vw'
+                                                        ? '85%'
                                                         : '23vw',
                                                 marginTop: '7.5%',
                                                 marginLeft: '7.5%',

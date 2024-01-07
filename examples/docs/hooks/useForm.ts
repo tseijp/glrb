@@ -6,12 +6,13 @@ const clamp = (min: number, max: number, value: number) =>
 
 const fitTextarea = (el: any) => {
         let w = window.innerWidth
-        w = w * (w < 997 ? 0.85 : 0.3)
         let h = window.innerHeight
-        el.style.width = 'auto'
         el.style.height = 'auto'
-        el.style.width = clamp(100, w, el.scrollWidth + 100) + 'px'
-        el.style.height = clamp(100, h, el.scrollHeight + 100) + 'px'
+        el.style.width =
+                w < 997
+                        ? Math.floor(w * 0.85) + 'px'
+                        : clamp(100, w * 0.3, el.scrollWidth + 100) + 'px'
+        el.style.height = clamp(100, h * 0.5, el.scrollHeight + 100) + 'px'
 }
 
 export const createForm = <

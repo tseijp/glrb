@@ -20,7 +20,7 @@ export const DemoInput = React.forwardRef<HTMLTextAreaElement, DemoInputProps>(
                                         whiteSpace: 'nowrap',
                                         width: 'auto',
                                         height: 'auto',
-                                        maxWidth: '100vw',
+                                        maxWidth: '80vw',
                                         maxHeight: '100vh',
                                         color: 'rgba(21, 21, 21)',
                                 }}
