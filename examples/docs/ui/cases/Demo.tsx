@@ -26,7 +26,7 @@ export const Demo = (props: DemoProps) => {
                                 style={{
                                         display: 'flex',
                                         width: '100%',
-                                        overflow: 'hidden',
+                                        overflow: 'visible',
                                         flexDirection: isMobile
                                                 ? 'column'
                                                 : 'row',

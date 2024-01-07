@@ -15,6 +15,9 @@ export const Main = (props: MainProps) => {
                         style={{
                                 width: '100vw',
                                 height: '200vh',
+                                maxWidth: '100vw',
+                                overflow: 'hidden',
+                                overflowX: 'hidden',
                                 background: 'rgba(242, 242, 242)',
                         }}
                 >

@@ -1,11 +1,17 @@
 import { useOnce } from './useOnce'
 import { useCall } from './useCall'
 
+const clamp = (min: number, max: number, value: number) =>
+        Math.min(Math.max(value, min), max)
+
 const fitTextarea = (el: any) => {
+        let w = window.innerWidth
+        w = w * (w < 997 ? 0.85 : 0.3)
+        let h = window.innerHeight
         el.style.width = 'auto'
         el.style.height = 'auto'
-        el.style.width = el.scrollWidth + 100 + 'px'
-        el.style.height = el.scrollHeight + 100 + 'px'
+        el.style.width = clamp(100, w, el.scrollWidth + 100) + 'px'
+        el.style.height = clamp(100, h, el.scrollHeight + 100) + 'px'
 }
 
 export const createForm = <
