@@ -30,7 +30,8 @@ export const createGesture = () => {
         const scroll = scrollEvent()
 
         const ref = (el: Element) => {
-                resetScrollPosition(0)
+                initValue()
+                window.scrollTo({ top: 0, behavior: 'instant' })
                 if (el) scroll.onMount(document as unknown as Element)
                 else scroll.onClean()
         }
@@ -45,11 +46,25 @@ export const createGesture = () => {
         let iy = 0 // current y        ... 0 or 1
         let isClicking = false
 
+        const initValue = () => {
+                y = 0
+                dy = 0
+                vy = 0
+                sy = 0
+                iy = 0
+        }
+
         // reset scroll position if not scrolling
         const resetScrollPosition = (top = 0) => {
                 if (!self.isGestureEnd) return // since events are stacked in duplicate.
                 window.scrollTo({ top, behavior: 'instant' })
                 isClicking = false
+        }
+
+        // true if scroll position is over
+        const checkIgnorePos = (y = 0) => {
+                const h = window.innerHeight
+                return y < 0.01 || h - 0.01 < y
         }
 
         const onGesture = () => {
@@ -71,6 +86,7 @@ export const createGesture = () => {
         }
 
         const onClick = () => {
+                if (checkIgnorePos(window.scrollY + 1)) return
                 isClicking = true
                 sy = 1
                 onGestureEnd()
@@ -86,7 +102,7 @@ export const createGesture = () => {
                         movement,
                 } = state
                 const h = window.innerHeight
-                if (0.01 < _y && _y < h - 0.01) {
+                if (!checkIgnorePos(_y)) {
                         dy = movement[1] / h
                         vy = Math.max(vy, Math.abs(_vy / h))
                         sy = Math.abs(dy) > DELTA_THRESHOLD ? Math.sign(dy) : 0

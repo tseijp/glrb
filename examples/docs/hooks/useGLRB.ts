@@ -16,16 +16,24 @@ export const createGLRB = (frag: string) => {
                 callback()
         }
 
+        const resize = () => {
+                let w = window.innerWidth
+                if (w >= 996) w *= 0.45
+                let h = w * 0.65
+                gl.resize({} as any, w, h)
+        }
+
         const mount = () => {
                 try {
                         gl.el = el
                         gl.gl = el.getContext('webgl2', opt)
                         gl.init()
-                        gl.resize({} as any, 256, 256)
+                        resize()
                         gl.render()
                         gl.clear()
                         gl.viewport()
                         gl.drawArrays()
+                        window.addEventListener('resize', resize)
                 } catch (e) {
                         console.warn((err = e))
                         update()
@@ -33,6 +41,7 @@ export const createGLRB = (frag: string) => {
         }
 
         const unmount = () => {
+                window.removeEventListener('resize', resize)
                 try {
                         gl.gl?.deleteProgram?.(gl.pg)
                 } catch (e) {

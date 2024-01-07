@@ -2,44 +2,54 @@ import * as React from 'react'
 import { useGLRB } from '@site/hooks/useGLRB'
 import { useForm } from '@site/hooks/useForm'
 import { useDelay } from '@site/hooks/useDelay'
+import { DemoTitle } from './DemoTitle'
+import { useWindowSize } from '@docusaurus/theme-common'
+import { DemoInput } from './DemoInput'
 
 export interface DemoProps {
         // children: React.ReactNode
+        title: string
         frag: string
 }
 
 export const Demo = (props: DemoProps) => {
         const { frag } = props
+        const isMobile = useWindowSize() === 'mobile'
 
         const delay = useDelay((e) => glrb.set(e.target.value))
         const form = useForm(delay)
         const glrb = useGLRB()
 
         return (
-                <div
-                        style={{
-                                minHeight: '100vh',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                // background: 'red', // !!!!!!!
-                        }}
-                >
-                        <canvas ref={glrb.ref} />
-                        <textarea
+                <div>
+                        <div
                                 style={{
-                                        marginLeft: '64px',
-                                        background: 'none',
-                                        color: 'rgba(21, 21, 21)',
-                                        resize: 'none',
-                                        border: 'none',
-                                        outline: 'none',
-                                        width: '256px',
-                                        height: '256px',
+                                        display: 'flex',
+                                        width: '100%',
+                                        overflow: 'hidden',
+                                        flexDirection: isMobile
+                                                ? 'column'
+                                                : 'row',
                                 }}
-                                defaultValue={frag}
-                                ref={form.ref}
-                        />
+                        >
+                                <canvas ref={glrb.ref} />
+                                <div
+                                        style={{
+                                                width: isMobile
+                                                        ? '100vw'
+                                                        : '23vw',
+                                                marginTop: '7.5%',
+                                                marginLeft: '7.5%',
+                                                boxSizing: 'border-box',
+                                        }}
+                                >
+                                        <DemoTitle>Basic Example</DemoTitle>
+                                        <DemoInput
+                                                defaultValue={frag}
+                                                ref={form.ref}
+                                        />
+                                </div>
+                        </div>
                 </div>
         )
 }

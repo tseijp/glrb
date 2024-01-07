@@ -21,13 +21,41 @@ export default function Home(): JSX.Element {
                 <Layout noFooter>
                         <Head />
                         <Main>
+                                {/* <img
+                                        src="/img/202401071338.png"
+                                        style={{
+                                                top: 0,
+                                                opacity: 0.5,
+                                                width: '1280px',
+                                                height: '800px',
+                                                position: 'fixed',
+                                        }}
+                                /> */}
                                 <WrapLanding>
                                         <H1>GLRB</H1>
                                         <H3>GLSL via Ruby</H3>
                                 </WrapLanding>
                                 <WrapCases>
-                                        <Demo frag={FRAG} />
-                                        {/* <Demo frag={FRAG} /> */}
+                                        <Demo
+                                                title="Basic Example"
+                                                frag={FRAG}
+                                        />
+                                        <Demo
+                                                title="Basic Example"
+                                                frag={FRAG}
+                                        />
+                                        <Demo
+                                                title="Basic Example"
+                                                frag={FRAG}
+                                        />
+                                        <Demo
+                                                title="Basic Example"
+                                                frag={FRAG}
+                                        />
+                                        <Demo
+                                                title="Basic Example"
+                                                frag={FRAG}
+                                        />
                                 </WrapCases>
                         </Main>
                 </Layout>

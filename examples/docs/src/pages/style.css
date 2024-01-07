@@ -17,3 +17,14 @@
 [data-theme='light'] .navbar-sidebar {
         background-color: rgba(242, 242, 242, 1);
 }
+
+/* Hides scrollbar for the main container */
+body::-webkit-scrollbar {
+        display: none;
+}
+
+main {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        overflow: scroll; /* Enable scrolling */
+}

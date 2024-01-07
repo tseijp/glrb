@@ -13,13 +13,8 @@ export const Main = (props: MainProps) => {
                 <main
                         ref={ref}
                         style={{
+                                width: '100vw',
                                 height: '200vh',
-                                display: 'flex',
-                                boxSizing: 'border-box',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexDirection: 'column',
-                                overflow: 'visible',
                                 background: 'rgba(242, 242, 242)',
                         }}
                 >
