@@ -52,6 +52,7 @@ export const createGesture = () => {
                 vy = 0
                 sy = 0
                 iy = 0
+                isClicking = false
         }
 
         // reset scroll position if not scrolling
