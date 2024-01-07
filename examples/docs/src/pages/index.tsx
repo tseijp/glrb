@@ -8,6 +8,7 @@ import { WrapCases } from '@site/ui/cases/WrapCases'
 import Layout from '@theme/Layout'
 import { Demo } from '@site/ui/cases/Demo'
 import './style.css'
+import { useOnce } from '@site/hooks/useOnce'
 
 const FRAG = `
 x = gl.FragCoord.x / gl.w
@@ -20,6 +21,7 @@ export default function Home(): JSX.Element {
         return (
                 <Layout noFooter>
                         <Head />
+                        <div />
                         <Main>
                                 {/* <img
                                         src="/img/202401071338.png"

@@ -68,15 +68,15 @@ export const scrollEvent = () => {
 
         const onMount = (target: Element) => {
                 self.target = target
-                window.addEventListener('scroll', self.onScrolling)
-                window.addEventListener('scrollend', self.onScrollEnd)
+                self.target.addEventListener('scroll', self.onScrolling)
+                self.target.addEventListener('scrollend', self.onScrollEnd)
         }
 
         const onClean = () => {
                 const target = self.target
                 if (!target) return
-                window.removeEventListener('scroll', self.onScrolling)
-                window.removeEventListener('scrollend', self.onScrollEnd)
+                self.target.removeEventListener('scroll', self.onScrolling)
+                self.target.removeEventListener('scrollend', self.onScrollEnd)
         }
 
         const ref = (el: Element | null) => {

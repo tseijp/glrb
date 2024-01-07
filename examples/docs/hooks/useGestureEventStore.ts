@@ -19,8 +19,12 @@ const clamp = (x: number, min: number, max: number) => {
         return x
 }
 
+const isDev = process.env.NODE_ENV === 'development'
+
 export const createGesture = () => {
+        // for hot reloading
         const listeners = new Set<any>()
+
         const subscribe = (callback: any) => {
                 if (!callback) return
                 listeners.add(callback)
@@ -30,9 +34,15 @@ export const createGesture = () => {
         const scroll = scrollEvent()
 
         const ref = (el: Element) => {
-                initValue()
-                window.scrollTo({ top: 0, behavior: 'instant' })
-                if (el) scroll.onMount(document as unknown as Element)
+                // for hot reloading
+                if (el && isDev) localStorage.setItem('GESTURE', self.hash)
+
+                // reset scroll position when page is reloaded
+                setTimeout(() => {
+                        window.scrollTo({ top: 0, behavior: 'instant' })
+                        initValue()
+                }, 100)
+                if (el) scroll.onMount(window as unknown as Element)
                 else scroll.onClean()
         }
 
@@ -65,7 +75,7 @@ export const createGesture = () => {
         // true if scroll position is over
         const checkIgnorePos = (y = 0) => {
                 const h = window.innerHeight
-                return y < 0.01 || h - 0.01 < y
+                return y < 0.0 || h < y
         }
 
         const onGesture = () => {
@@ -95,6 +105,10 @@ export const createGesture = () => {
         }
 
         scroll.subscribe((state) => {
+                // for hot reloading
+                if (isDev && localStorage.getItem('GESTURE') !== self.hash)
+                        return
+
                 const {
                         isScrolling,
                         isScrollEnd,
@@ -120,6 +134,7 @@ export const createGesture = () => {
         })
 
         const self = {
+                hash: '', // for hot reloading
                 subscribe,
                 ref,
                 onClick,
@@ -134,7 +149,7 @@ export const createGesture = () => {
                 },
                 get dy() {
                         if (self.isGestureing) {
-                                let ret = dy / DELTA_THRESHOLD
+                                let ret = dy / DELTA_THRESHOLD + 0.05
                                 ret = Math.pow(ret, 3) // odd !!
                                 if (ret < 0) ret = 1 + ret
                                 return clamp(ret, 0, 1)
@@ -145,12 +160,15 @@ export const createGesture = () => {
                         return scroll.isScrollStart
                 },
                 get isGestureing() {
-                        return scroll.isScrolling
+                        return scroll.isScrolling && !isClicking
                 },
                 get isGestureEnd() {
                         return scroll.isScrollEnd || isClicking
                 },
         }
+
+        // for hot reloading
+        if (isDev) self.hash = Math.random().toString(32).slice(2)
 
         return self
 }
