@@ -32,9 +32,14 @@ export const ScrollContent = (props: ScrollCanvasProps) => {
                 const { offset, isScrolling } = state
                 const height = window.innerHeight
                 if (!isScrolling) return
-                const y = -stepPosition(offset[1], index, step, height)
+
+                let [, y] = offset
+                y = -stepPosition(y, index, step, height)
+
+                // fix flicking bug
                 const duration = y < -height || height < y ? 0 : 0.2
 
+                // animate position
                 tl.clear()
                 tl.to(ref.current, { y, duration })
                 tl.play()

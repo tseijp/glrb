@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useColorMode } from '@docusaurus/theme-common'
 
 export interface CaseInputProps {
         defaultValue: string
@@ -7,6 +8,7 @@ export interface CaseInputProps {
 export const CaseInput = React.forwardRef<HTMLTextAreaElement, CaseInputProps>(
         (props, forwardRef) => {
                 const { defaultValue } = props
+                const isDark = useColorMode().colorMode === 'dark'
                 return (
                         <textarea
                                 ref={forwardRef}
@@ -22,7 +24,9 @@ export const CaseInput = React.forwardRef<HTMLTextAreaElement, CaseInputProps>(
                                         height: 'auto',
                                         maxWidth: '80vw',
                                         maxHeight: '100%',
-                                        color: 'rgba(21, 21, 21)',
+                                        color: isDark
+                                                ? 'rgb(200, 200, 200)'
+                                                : 'rgba(20, 20, 20)',
                                 }}
                                 defaultValue={defaultValue}
                         />

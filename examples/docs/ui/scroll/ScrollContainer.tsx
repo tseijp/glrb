@@ -10,8 +10,7 @@ export const ScrollContainer = (props: ScrollContainerProps) => {
         const { width = 1, height = 2 } = props
 
         const scroll = useScrollEvent((state) => {
-                const { target } = state
-                const { threshold, offset, value, isScrolling } = state
+                const { target, threshold, offset, value, isScrolling } = state
                 if (!isScrolling) return
 
                 const [, h] = threshold
