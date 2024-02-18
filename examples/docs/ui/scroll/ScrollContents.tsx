@@ -45,11 +45,11 @@ export const ScrollContent = (props: ScrollCanvasProps) => {
                 tl.play()
         })
 
-        // useLayoutEffect(() => {
-        //         const height = window.innerHeight
-        //         const y = -stepPosition(0, index, step, height)
-        //         ref.current.style.transform = `translate(0, ${y}px)`
-        // }, [])
+        useLayoutEffect(() => {
+                const height = window.innerHeight
+                const y = -stepPosition(0, index, step, height)
+                ref.current.style.transform = `translate(0, ${y}px)`
+        }, [])
 
         return (
                 <div
