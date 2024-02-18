@@ -2,7 +2,6 @@ import { Case } from './cases/Case'
 import { Landing } from './landing/Landing'
 import { ScrollContainer } from './scroll/ScrollContainer'
 import { ScrollContent } from './scroll/ScrollContents'
-import { useScrollStore } from '@site/hooks/useScroll'
 
 const FRAG = `
 x = gl.FragCoord.x / gl.w

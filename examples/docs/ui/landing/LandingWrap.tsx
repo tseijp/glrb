@@ -86,6 +86,7 @@ export const LandingWrap = (props: LandingContainerProps) => {
                         ref={ref}
                         onClick={handleClick}
                         style={{
+                                zIndex: 1,
                                 color: '#fff',
                                 width: '100vw',
                                 height: '100vh',
