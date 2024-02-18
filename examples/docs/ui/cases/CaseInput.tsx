@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-export interface DemoInputProps {
+export interface CaseInputProps {
         defaultValue: string
 }
 
-export const DemoInput = React.forwardRef<HTMLTextAreaElement, DemoInputProps>(
+export const CaseInput = React.forwardRef<HTMLTextAreaElement, CaseInputProps>(
         (props, forwardRef) => {
                 const { defaultValue } = props
                 return (
@@ -21,7 +21,7 @@ export const DemoInput = React.forwardRef<HTMLTextAreaElement, DemoInputProps>(
                                         width: 'auto',
                                         height: 'auto',
                                         maxWidth: '80vw',
-                                        maxHeight: '100vh',
+                                        maxHeight: '100%',
                                         color: 'rgba(21, 21, 21)',
                                 }}
                                 defaultValue={defaultValue}

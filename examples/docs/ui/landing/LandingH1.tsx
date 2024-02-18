@@ -1,14 +1,14 @@
 import * as React from 'react'
 
 const fontSize = 'calc(20px + (100vw - 960px) / 200)'
-const letterSpacing = `calc(1em * 0.2)`
+const letterSpacing = `calc(1em * 0.4)`
 
-export const H3 = ({ children }: { children: string }) => {
+export const LandingH1 = ({ children }: { children: string }) => {
         return (
-                <h3
+                <h1
                         style={{
                                 boxSizing: 'border-box',
-                                margin: `0 0 0 calc(3 * ${letterSpacing})`,
+                                margin: '0 0 0 10%',
                                 // text decoration
                                 color: 'rgba(247, 247, 247)',
                                 lineHeight: '2',
@@ -18,6 +18,6 @@ export const H3 = ({ children }: { children: string }) => {
                         }}
                 >
                         {children}
-                </h3>
+                </h1>
         )
 }

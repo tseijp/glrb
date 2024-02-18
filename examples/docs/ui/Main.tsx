@@ -1,27 +1,36 @@
-import * as React from 'react'
-import { useGestureEventStore } from '@site/hooks/useGestureEventStore'
+import { Case } from './cases/Case'
+import { Landing } from './landing/Landing'
+import { ScrollContainer } from './scroll/ScrollContainer'
+import { ScrollContent } from './scroll/ScrollContents'
+import { useScrollStore } from '@site/hooks/useScroll'
 
-export interface MainProps {
-        children: React.ReactNode
-}
+const FRAG = `
+x = gl.FragCoord.x / gl.w
+y = gl.FragCoord.y / gl.h
+col = vec x, y, 0.0, 1.0
+gl.FragColor = col
+`.trim()
 
-export const Main = (props: MainProps) => {
-        const { ref } = useGestureEventStore()
-        const { children } = props
-
+export const Main = () => {
+        const step = 5
         return (
-                <main
-                        ref={ref}
-                        style={{
-                                width: '100vw',
-                                height: '200vh',
-                                maxWidth: '100vw',
-                                overflow: 'hidden',
-                                overflowX: 'hidden',
-                                background: 'rgba(242, 242, 242)',
-                        }}
-                >
-                        {children}
+                <main>
+                        <ScrollContainer height={step} />
+                        <ScrollContent index={0} step={step}>
+                                <Landing />
+                        </ScrollContent>
+                        <ScrollContent index={1} step={step}>
+                                <Case title="Basic Example" frag={FRAG} />
+                        </ScrollContent>
+                        <ScrollContent index={2} step={step}>
+                                <Case title="Basic Example" frag={FRAG} />
+                        </ScrollContent>
+                        <ScrollContent index={3} step={step}>
+                                <Case title="Basic Example" frag={FRAG} />
+                        </ScrollContent>
+                        <ScrollContent index={4} step={step}>
+                                <Case title="Basic Example" frag={FRAG} />
+                        </ScrollContent>
                 </main>
         )
 }
